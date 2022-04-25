@@ -1,0 +1,16 @@
+*{
+  margin: 0 !important;
+  padding: 0;
+}
+
+
+body{ 
+  font-family: 'Montserrat';
+  color: #393939;
+}
+
+.MuiInput-root::before{
+  display:none;
+  border:none;
+  outline:none
+}

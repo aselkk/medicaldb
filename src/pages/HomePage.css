@@ -1,0 +1,66 @@
+.home-page-wrapper{
+    padding: 0px 35px 0 35px;
+    margin: 25px 0;
+    
+}
+
+.titles{
+    background-color: #E5E5E5;
+    color: #878787;
+    border-bottom: 1px solid white;
+    display: flex;
+    padding: 1.27em 3em;
+    font-weight: 300;
+    justify-content: space-between;
+}
+
+.patient{
+    background-color: #E5E5E5;
+    display: flex;
+    list-style: none;
+    padding: 1.4em 3em;
+    font-weight: 400;
+    border-bottom: 1px solid white;
+    font-size: 14px;
+    color: #393939;
+    justify-content: space-between;
+}
+
+.patient-id{
+    width: 2%;
+    text-align: center;
+}
+
+.patient-fullname{
+    width: 17%
+}
+
+.patient-birthdate{
+    width: 8%
+}
+
+.patient-gender{
+    width: 3%
+}
+
+.patient-number{
+    width: 7%
+}
+
+.patient-email{
+    width: 13%
+}
+
+.patient-address{
+    width: 10%
+}
+
+.patient-delete{
+    width: 2%;
+    box-sizing: border-box;
+    cursor: pointer
+}
+
+.patient-delete svg{
+    font-size: 20px;
+}
