@@ -36,8 +36,8 @@ const Header = () => {
                         <AiIcons.AiOutlineMenu onClick={showSideBar}/>
                     </NavLink>
                 </div>
-                <div className={sideBar ? 'wrap active' : 'wrap'}>
-                <nav className={sideBar ? 'nav-menu active' : 'nav-menu'}>
+                <div onClick={showSideBar} className={sideBar ? 'wrap active' : 'wrap'}>
+                <nav onClick={e => e.stopPropagation()} className={sideBar ? 'nav-menu active' : 'nav-menu'}>
                     <ul className='nav-menu-items'>
                         <li className='navbar-toggle'>
                             <NavLink to='#' className='menu-bar-close'>
@@ -47,7 +47,7 @@ const Header = () => {
                         {SidebarData.map((item,index)=> {
                             return (
                                 <li key={index} className={item.cName}>
-                                    <NavLink to={item.path}>
+                                    <NavLink onClick={showSideBar} to={item.path}>
                                         {item.icon}
                                         <span>{item.title}</span>
                                     </NavLink>
@@ -59,12 +59,8 @@ const Header = () => {
                 </div>
             {/* </div> */}
 
-
-
-
-
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-            <p style={{color:'#393939'}}>Hello, [user]!</p>
+            <p style={{color:'white',  fontWeight: '300'}}>Hello, [user]!</p>
                 <Tooltip title="Account settings">
                 <IconButton
                     onClick={handleClick}
@@ -74,7 +70,7 @@ const Header = () => {
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                 >
-                    <Avatar sx={{ bgcolor: '#6DA4D7', fontWeight: '300' }}>JW</Avatar>
+                    <Avatar sx={{ bgcolor: '#fff', fontWeight: '300', color:'#6DA4D7', fontSize:'15px' }}>JW</Avatar>
                 </IconButton>
                 </Tooltip>
             </Box>

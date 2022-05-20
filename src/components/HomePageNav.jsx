@@ -5,15 +5,46 @@ import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import './HomePageNav.css'
 import AddPatientModal from './AddPatientModal'
+import { Pagination } from '@mui/material';
 
-const HomePageNav = () => {
+
+const HomePageNav = ({selectedValue, setSelectedValue, pageNumber, setPageNumber, totalPatients}) => {
 
     const [modalActive, setModalActive] = useState(false)
+
+    const handleChange = (e) => {
+        setSelectedValue(e.target.value)
+            console.log(selectedValue)
+    }
+
+    // const filterInput = 'false'
+
+    // const filterPatients = async () => {
+    //     const fetchData = await fetch(`https://6241a2cf9b450ae27442e562.mockapi.io/clothes?filter=${filterInput}`)
+    //     const jsonData = await fetchData.json()
+    //     setFilteredPatients(jsonData)
+    // }       
+
+    // useEffect(() => {
+    //     filterPatients()
+    // }, [])
+
+    const totalPages = Math.ceil(totalPatients / 2)
+
+    const handleClick = (e, p) => {
+        setPageNumber(p)
+        console.log(totalPatients)
+    }   
 
     return (
         <div className='nav-wrapper'>
             <div className='header'>
                 <h1 className='heading'>Patients</h1>
+                <Pagination 
+                    count={totalPages} 
+                    shape="rounded"
+                    onChange={handleClick}
+                    />
             </div>
             <div className='main-container'>
                 <div className='tools'>
@@ -27,7 +58,8 @@ const HomePageNav = () => {
                             <div>
                             <FormControl fullWidth>
                                 <NativeSelect
-                                defaultValue={30}
+                                onChange={handleChange} 
+                                defaultValue={10}
                                 inputProps={{
                                     id: 'uncontrolled-native',
                                 }}
@@ -35,7 +67,7 @@ const HomePageNav = () => {
                                 marginRight: '10px', fontSize:'14px',marginTop:'2px'}}
                                 >
                                 <option value={10}>Name</option>
-                                <option value={20}>ID</option>
+                                <option value={20}>Birth Date</option>
                                 <option value={30}>Gender</option>
                                 </NativeSelect>
                             </FormControl>

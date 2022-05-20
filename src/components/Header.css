@@ -1,20 +1,12 @@
 .wrapper {
     height: 70px;
-    background: #E5E5E5;
+    background: #6DA4D7;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 2rem;
     box-sizing: border-box;
 }
-/* .navbar {
-    background-color: lightblue;
-    height: 80px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-} */
-
 .menu-bar-close {
     margin-left: 13rem;
     font-size: 1.6rem;
@@ -27,7 +19,7 @@
     color: white;
 }
 .menu-bar-open a:visited{
-    color: black;
+    color: white;
 }
 .nav-menu {
     background-color: white;

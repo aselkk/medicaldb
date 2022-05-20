@@ -1,13 +1,12 @@
 import React from 'react';
 import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
-import * as IoIcons from 'react-icons/io'
 import {BsPersonCircle} from 'react-icons/bs'
 
 const SidebarData = [
     {
         title: 'Home',
-        path: '/',
+        path: '/home',
         icon: <AiIcons.AiFillHome/>,
         cName: 'nav-text'
     },
