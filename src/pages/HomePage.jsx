@@ -3,23 +3,15 @@ import HomePageNav from '../components/HomePageNav'
 import './HomePage.css'
 import { Link } from "react-router-dom";
 
-
-
 const HomePage = () => {
 
     const [patients,setPatients] = useState([])
-    const [patientId, setPatientId] = useState('')
-    const [filteredPatients,setFilteredPatients] = useState([])
     const [selectedValue, setSelectedValue] = useState('')
-    const [pageNumber, setPageNumber] = useState(2)
+    const [pageNumber, setPageNumber] = useState(1)
     const [totalPatients, setTotalPatients] = useState('')
 
-
-
-
-
     const getPatients = async () => {
-        const fetchData = await fetch(`http://34.125.200.250/api/patients?pageNumber=${pageNumber}&pageSize=2`)
+        const fetchData = await fetch(`http://34.125.200.250/api/patients?pageNumber=${pageNumber}&pageSize=5`)
         const jsonData = await fetchData.json()
         setPatients(jsonData)
     }  
@@ -32,9 +24,6 @@ const HomePage = () => {
         getPatients()
         getTotalPatients()
     }, [patients])
-
-
-
 
 
     return (

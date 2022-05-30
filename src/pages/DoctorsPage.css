@@ -1,0 +1,28 @@
+.doctor{
+
+}
+
+.doctor-id{
+    width: 4%;
+}
+
+
+.doctor-fullname{
+    width: 24%
+}
+
+.doctor-number{
+    width: 15%
+}
+
+.doctor-email{
+    width: 17%
+}
+
+.doctor-specialty{
+    width: 15%
+}
+
+.doctor-decsription{
+    width: 20%
+}

@@ -122,7 +122,9 @@ const Header = () => {
                 <ListItemIcon>
                     <RiLogoutBoxLine style={{fontSize: '23px'}}/>
                 </ListItemIcon>
-                Logout
+                    <NavLink style={{color:'#393939', textDecoration:'none'}} to={'/'}>
+                        Logout
+                    </NavLink>
                 </MenuItem>
             </Menu>
 

@@ -199,6 +199,7 @@
   text-transform: capitalize;
   font-size: 15px;
   padding: 19px 42px;
+  border-bottom: 1px solid #99999957;
 }
 
 .fornow{
@@ -219,15 +220,15 @@
 }
 
 .item-description{
-  width:17%;
+  width:15%;
 }
 
 .item-duration{
-  width:13%;
+  width:26%;
 }
 
 .item-comments{
-  width:73%;
+  width:55%;
 } 
 
 .line{
@@ -248,3 +249,26 @@
   width:20%;
 }
 
+.life-anamnesis{
+  display: flex;
+  flex-direction: column;
+}
+
+.life-anamnesis-item{
+  height: 55px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid #99999957;
+}
+
+.item-title{
+  color: #878787;
+  font-size: 16px;
+  width: 22%;
+}
+
+.disease-item{
+  height: fit-content;
+  padding: 18px 0;
+}

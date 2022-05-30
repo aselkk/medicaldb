@@ -14,7 +14,8 @@ const PatientPage = () => {
     const [patient,setPatient] = useState([])
     const [complaint, setComplaint] = useState([])
     const [examinations, setExaminations] = useState([])
-
+    const [lifeAnamnesis, setLifeAnamnesis] = useState([])
+    const [diseaseAnamnesis, setDiseaseAnamnesis] = useState([])
 
     const getPatient = async () => {
         const fetchData = await fetch(`http://34.125.200.250/api/patients/${params.id}`)
@@ -30,19 +31,25 @@ const PatientPage = () => {
         const fetchData = await fetch(`http://34.125.200.250/api/examinations`)
         const jsonData = await fetchData.json()
         setExaminations(jsonData)
+    }  
+    const getLifeAnamnesis = async () => {
+        const fetchData = await fetch(`http://34.125.200.250/api/patients/12/life_anamnesis/2`)
+        const jsonData = await fetchData.json()
+        setLifeAnamnesis(jsonData)
+    }    
+    const getDiseaseAnamnesis = async () => {
+        const fetchData = await fetch(`http://34.125.200.250/api/patients/12/disease_anamneses`)
+        const jsonData = await fetchData.json()
+        setDiseaseAnamnesis(jsonData)
+        console.log(diseaseAnamnesis[0],'disease')
     }       
     useEffect(() => {
         getPatient()
         getComplaint()
         getExaminations()
+        getLifeAnamnesis()
+        getDiseaseAnamnesis()
     }, [])
-
-
-
-    console.log(examinations)
-
-    console.log(patient.sex)
-
 
     const deletePatient = async () => {
         try {
@@ -109,21 +116,21 @@ const PatientPage = () => {
                 </div>
             </div>
 
-            <div class="tab-wrap">
-                <input type="radio" id="tab1" name="tabGroup1" class="tab"/>
-                <label for="tab1">Complaints</label>
+            <div className="tab-wrap">
+                <input type="radio" id="tab1" name="tabGroup1" class="tab" defaultChecked/>
+                <label htmlFor="tab1">Complaints</label>
 
                 <input type="radio" id="tab2" name="tabGroup1" class="tab"/>
                 <label for="tab2">Treatments</label>
 
                 <input type="radio" id="tab3" name="tabGroup1" class="tab"/>
-                <label for="tab3">Examinatios</label>
+                <label for="tab3">Examinations</label>
 
                 <input type="radio" id="tab4" name="tabGroup1" class="tab"/>
-                <label for="tab4">Life Anamnesys</label>
+                <label for="tab4">Life Anamnesis</label>
 
                 <input type="radio" id="tab5" name="tabGroup1" class="tab"/>
-                <label for="tab5">Disease Anamnesys</label>
+                <label for="tab5">Disease Anamnesis</label>
 
                 <div class="tab__content">
                 <div className='tabs'>
@@ -164,13 +171,26 @@ const PatientPage = () => {
                 </div>
 
                 <div class="tab__content">
-                    <h3 className='fornow fornow__header'>life anamnesys</h3>
-                    <p className='fornow'>Praesent nonummy mi in odio. Nullam accumsan lorem in dui. Vestibulum turpis sem, aliquet eget, lobortis pellentesque, rutrum eu, nisl. Nullam accumsan lorem in dui. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</p>
+                        <div className='complaints life-anamnesis'>
+                            <div className='life-anamnesis-item'><span className='item-title'>ID:</span><p className='life-anamnesis-id'> {lifeAnamnesis?.id}</p></div>
+                            <div className='life-anamnesis-item'><span className='item-title'>Birth order:</span><p className='life-anamnesis-birth-order'> {lifeAnamnesis?.birthOrder}</p></div>
+                            <div className='life-anamnesis-item'><span className='item-title'>Comments: </span><p className='life-anamnesis-comments'>{lifeAnamnesis?.comments}</p></div>
+                            <div className='life-anamnesis-item'><span className='item-title'>Labor:</span> <p className='life-anamnesis-labor'>{lifeAnamnesis?.labor}</p></div>
+                            <div className='life-anamnesis-item'><span className='item-title'>Labor pathologies:</span><p className='life-anamnesis-laborPathologies'> {(lifeAnamnesis?.laborPathologies) ? 'Yes' : 'No'}</p></div>
+                            <div className='life-anamnesis-item'><span className='item-title'>Mother pregnancy: </span><p className='life-anamnesis-motherPregnancy'>{lifeAnamnesis?.mothersPregnancy}</p></div>
+                            <div className='life-anamnesis-item'><span className='item-title'>Pregnancy pathologies: </span><p className='life-anamnesis-pregnancyPathologies'>{(lifeAnamnesis?.pregnancyPathologies) ? 'Yes' : 'No'}</p></div>
+                            <div className='life-anamnesis-item'><span className='item-title'>Week of birth:</span><p className='life-anamnesis-weekOfBirth'>{lifeAnamnesis?.weekOfBirth}</p> </div>
+                        </div>
                 </div>
 
                 <div class="tab__content">
-                    <h3 className='fornow fornow__header'> disease anamnesys</h3>
-                    <p className='fornow'>Praesent nonummy mi in odio. Nullam accumsan lorem in dui. Vestibulum turpis sem, aliquet eget, lobortis pellentesque, rutrum eu, nisl. Nullam accumsan lorem in dui. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</p>
+                <div className='complaints life-anamnesis'>
+                            <div className='life-anamnesis-item disease-item'><span className='item-title'>ID:</span><p className='life-anamnesis-id'> {diseaseAnamnesis[0]?.id}</p></div>
+                            <div className='life-anamnesis-item disease-item'><span className='item-title'>Cause:</span><p className='life-anamnesis-birth-order'> {diseaseAnamnesis[0]?.cause}</p></div>
+                            <div className='life-anamnesis-item disease-item'><span className='item-title'>Comments: </span><p className='life-anamnesis-comments'>{diseaseAnamnesis[0]?.comments}</p></div>
+                            <div className='life-anamnesis-item disease-item'><span className='item-title'>Development:</span> <p className='life-anamnesis-labor'>{diseaseAnamnesis[0]?.development}</p></div>
+                            <div className='life-anamnesis-item disease-item'><span className='item-title'>Disease start:</span><p className='life-anamnesis-laborPathologies'> {diseaseAnamnesis[0]?.diseaseStart}</p></div>
+                        </div>
                 </div>
 
 

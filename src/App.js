@@ -1,4 +1,4 @@
-import {Routes, Route, BrowserRouter} from 'react-router-dom'
+import {Routes, Route, BrowserRouter, useLocation} from 'react-router-dom'
 import Header from "./components/Header";
 import HomePage from './pages/HomePage';
 import DoctorsPage from './pages/DoctorsPage';
@@ -9,15 +9,17 @@ import SettingsPage from './pages/SettingsPage';
 import LoginPage from './pages/LoginPage';
 import PatientPage from './pages/PatientPage';
 
-function App() {
+function App() {  
+
+  const location = useLocation()
+  const currlocation = location.pathname
+
+  
   return (
     <div className="App">
-      <BrowserRouter>
-      <Routes>
-        <Route exact path='/' element={<LoginPage/>}/>
-      </Routes>
-      <Header/>
+      {currlocation === '/' ? null : <Header/>}
         <Routes>
+          <Route exact path='/' element={<LoginPage/>}/>
           <Route exact path='/home' element={<HomePage/>}/>
           <Route exact path='/doctors' element={<DoctorsPage/>}/>
           <Route exact path='/examinations' element={<ExaminationsPage/>}/>
@@ -26,7 +28,6 @@ function App() {
           <Route exact path='/settings' element={<SettingsPage/>}/>
           <Route exact path='/patient/:id' element={<PatientPage/>}/>
         </Routes>
-      </BrowserRouter>
     </div>
   );
 }

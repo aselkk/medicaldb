@@ -11,12 +11,6 @@ const SidebarData = [
         cName: 'nav-text'
     },
     {
-        title: 'Patients',
-        path: '/patients',
-        icon: <FaIcons.FaRegAddressCard/>,
-        cName: 'nav-text'
-    },
-    {
         title: 'Examinations',
         path: '/examinations',
         icon: <FaIcons.FaRegEye/>,
@@ -32,12 +26,6 @@ const SidebarData = [
         title: 'Organizations',
         path: '/organizations',
         icon: <FaIcons.FaRegBuilding/>,
-        cName: 'nav-text'
-    },
-    {
-        title: 'Settings',
-        path: '/settings',
-        icon: <AiIcons.AiOutlineSetting/>,
         cName: 'nav-text'
     }
 ]

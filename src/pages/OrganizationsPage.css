@@ -1,0 +1,16 @@
+.organizations-wrapper{
+    padding: 15px 55px 0 55px;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.cards-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-wrap: wrap;
+    gap: 18px 85px;
+}
+
