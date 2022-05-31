@@ -5,6 +5,7 @@ import Badge from '../../src/Badge.png'
 import { NavLink } from "react-router-dom";
 import AddComplaintModal from '../components/AddComplaintModal'
 import AddExaminationModal from '../components/AddExaminationModal'
+import AddVaccinationModal from '../components/AddVaccinationModal'
 import {BsTrash} from 'react-icons/bs'
 import {HiOutlinePlus}  from 'react-icons/hi'
 
@@ -13,6 +14,7 @@ const PatientPage = () => {
     const params = useParams()
     const [modalActive, setModalActive] = useState(false)
     const [complaintModalActive, setComplaintModalActive] = useState(false)
+    const [vacModalActive, setVacModalActive] = useState(false)
     // const [examinationModalActive, setExaminationModalActive] = useState(false)
     const [patient,setPatient] = useState([])
     const [complaint, setComplaint] = useState([])
@@ -58,7 +60,6 @@ const PatientPage = () => {
         getPatient()
         getLifeAnamnesis()
         getDiseaseAnamnesis()
-        getVaccinations()
     }, [ ])
 
     
@@ -69,6 +70,10 @@ const PatientPage = () => {
     useEffect(() => {
         getComplaint()
     },[complaint])
+
+    useEffect(() => {
+        getVaccinations()
+    },[vaccinations])    
 
     const deletePatient = async () => {
         try {
@@ -137,6 +142,8 @@ const PatientPage = () => {
             </div>
             <AddComplaintModal complaintModalActive={complaintModalActive} setComplaintModalActive={setComplaintModalActive}/>
             <AddExaminationModal modalActive={modalActive} setModalActive={setModalActive}/>
+            <AddVaccinationModal vacModalActive={vacModalActive} setVacModalActive={setVacModalActive}/>
+            
 
             <div className="tab-wrap">
                 <input type="radio" id="tab1" name="tabGroup1" class="tab" defaultChecked/>
@@ -248,6 +255,8 @@ const PatientPage = () => {
                 <div className='tabs'>
                     <p className='tab-item exam-id'>№</p>
                     <p className='tab-item exam-name'>Name</p>
+                    <button className='addComplaintBtn add-patient-btn' onClick = {() => setVacModalActive(true) }><HiOutlinePlus style={{fontSize:'23px', paddingRight:'8px', fontWeight: '200' }}/>Add vaccination</button>
+
                 </div>
                     {(vaccinations) ? vaccinations.map((item, index) => (
                         <div className='complaints'>
