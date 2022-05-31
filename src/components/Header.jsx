@@ -60,7 +60,7 @@ const Header = () => {
             {/* </div> */}
 
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-            <p style={{color:'white',  fontWeight: '300'}}>Hello, [user]!</p>
+            <p style={{color:'white',  fontWeight: '300'}}>Hello, Aiza!</p>
                 <Tooltip title="Account settings">
                 <IconButton
                     onClick={handleClick}
@@ -70,7 +70,7 @@ const Header = () => {
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                 >
-                    <Avatar sx={{ bgcolor: '#fff', fontWeight: '300', color:'#6DA4D7', fontSize:'15px' }}>JW</Avatar>
+                    <Avatar sx={{ bgcolor: '#fff', fontWeight: '300', color:'#6DA4D7', fontSize:'15px' }}>AT</Avatar>
                 </IconButton>
                 </Tooltip>
             </Box>

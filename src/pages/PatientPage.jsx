@@ -2,20 +2,25 @@ import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router'
 import './PatientPage.css'
 import Badge from '../../src/Badge.png'
-import AddComplaintModal from '../components/AddComplaintModal'
 import { NavLink } from "react-router-dom";
+import AddComplaintModal from '../components/AddComplaintModal'
+import AddExaminationModal from '../components/AddExaminationModal'
 import {BsTrash} from 'react-icons/bs'
-
+import {HiOutlinePlus}  from 'react-icons/hi'
 
 
 const PatientPage = () => {
     const params = useParams()
     const [modalActive, setModalActive] = useState(false)
+    const [complaintModalActive, setComplaintModalActive] = useState(false)
+    // const [examinationModalActive, setExaminationModalActive] = useState(false)
     const [patient,setPatient] = useState([])
     const [complaint, setComplaint] = useState([])
     const [examinations, setExaminations] = useState([])
     const [lifeAnamnesis, setLifeAnamnesis] = useState([])
     const [diseaseAnamnesis, setDiseaseAnamnesis] = useState([])
+    const [vaccinations, setVaccinations] = useState([])
+    const [treatments, setTreatments] = useState([])
 
     const getPatient = async () => {
         const fetchData = await fetch(`http://34.125.200.250/api/patients/${params.id}`)
@@ -42,14 +47,28 @@ const PatientPage = () => {
         const jsonData = await fetchData.json()
         setDiseaseAnamnesis(jsonData)
         console.log(diseaseAnamnesis[0],'disease')
-    }       
+    } 
+    const getVaccinations = async () => {
+        const fetchData = await fetch(`http://34.125.200.250/api/diseases`)
+        const jsonData = await fetchData.json()
+        setVaccinations(jsonData)
+        console.log(vaccinations,'vaccinations')
+    }   
     useEffect(() => {
         getPatient()
-        getComplaint()
-        getExaminations()
         getLifeAnamnesis()
         getDiseaseAnamnesis()
-    }, [])
+        getVaccinations()
+    }, [ ])
+
+    
+    useEffect(() => {
+        getExaminations()
+    },[examinations])    
+
+    useEffect(() => {
+        getComplaint()
+    },[complaint])
 
     const deletePatient = async () => {
         try {
@@ -68,6 +87,7 @@ const PatientPage = () => {
     return (
         <div className='patient-page-wrapper'>
             <div className='patient-card'>
+
                 <div className='patient-card-top'>
                         <img style={{marginRight:'1em'}} src={Badge} alt="" />
                         <div style={{ width: '32%', paddingTop:'10px'}}><p style={{ width: '10%', color:'#393939', fontSize:'15px'}}>{patient.fullName}</p></div>
@@ -115,6 +135,8 @@ const PatientPage = () => {
     color:' indianred', right:'7px', bottom:'91px', position:'absolute'}}/></NavLink>
                 </div>
             </div>
+            <AddComplaintModal complaintModalActive={complaintModalActive} setComplaintModalActive={setComplaintModalActive}/>
+            <AddExaminationModal modalActive={modalActive} setModalActive={setModalActive}/>
 
             <div className="tab-wrap">
                 <input type="radio" id="tab1" name="tabGroup1" class="tab" defaultChecked/>
@@ -132,13 +154,16 @@ const PatientPage = () => {
                 <input type="radio" id="tab5" name="tabGroup1" class="tab"/>
                 <label for="tab5">Disease Anamnesis</label>
 
+                <input type="radio" id="tab6" name="tabGroup1" class="tab"/>
+                <label for="tab6">Vaccinations</label>
+
                 <div class="tab__content">
                 <div className='tabs'>
                     <p className='tab-item item-id'>№</p>
                     <p className='tab-item item-description'>Description</p>
                     <p className='tab-item item-duration'>Duration</p>
                     <p className='tab-item item-comments'>Comments</p>      
-                    {/* <div className='tab-item item-button' onClick={() => setModalActive(true)}>Add complaint</div> */}
+                    <button className='addComplaintBtn add-patient-btn' onClick = {() => setComplaintModalActive(true) }><HiOutlinePlus style={{fontSize:'23px', paddingRight:'8px', fontWeight: '200' }}/>Add complaint</button>
                 </div>
                     {complaint.map((item, index) => (
                         <div className='complaints'>
@@ -150,16 +175,42 @@ const PatientPage = () => {
                     ))}
                 </div>
                 <div class="tab__content">
-                    <h3 className='fornow fornow__header'>treatments</h3>
-                    <p className='fornow'>Praesent nonummy mi in odio. Nullam accumsan lorem in dui. Vestibulum turpis sem, aliquet eget, lobortis pellentesque, rutrum eu, nisl. Nullam accumsan lorem in dui. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</p>
+                <div className='tabs'>
+                    <p className='tab-item exam-id'>№</p>
+                    <p className='tab-item exam-name'>Name</p>
+                    <p className='tab-item exam-name'>Start Date</p>
+                    <p className='tab-item exam-name'>End Date</p>
+                    <p className='tab-item exam-name'>Dosage</p>                    
                 </div>
+                        <div className='complaints'>
+                            <p className='exam-id'>1.</p>
+                            <p className='exam-name'>MedicationA</p>
+                            <p className='exam-name'>14-04-2022</p>
+                            <p className='exam-name'>16-04-2022</p>
+                            <p className='exam-name'>3 times a day after meal</p>
+                        </div>
+                        <div className='complaints'>
+                            <p className='exam-id'>2.</p>
+                            <p className='exam-name'>MedicationB</p>
+                            <p className='exam-name'>11-10-2022</p>
+                            <p className='exam-name'>20-11-2022</p>
+                            <p className='exam-name'>2 times a day after meal</p>
+                        </div>
+                        <div className='complaints'>
+                            <p className='exam-id'>3.</p>
+                            <p className='exam-name'>MedicationC</p>
+                            <p className='exam-name'>24-04-2022</p>
+                            <p className='exam-name'>26-04-2022</p>
+                            <p className='exam-name'>1 times a day before bed</p>
+                        </div>
+                </div>           
 
                 <div class="tab__content">
                 <div className='tabs'>
                     <p className='tab-item exam-id'>№</p>
                     <p className='tab-item exam-name'>Name</p>
                     <p className='tab-item exam-type'>Type</p>
-                    {/* <div className='tab-item item-button' onClick={() => setModalActive(true)}>Add complaint</div> */}
+                    <button className='addComplaintBtn add-patient-btn' onClick = {() => setModalActive(true) }><HiOutlinePlus style={{fontSize:'23px', paddingRight:'8px', fontWeight: '200' }}/>Add examination</button>
                 </div>
                     {examinations.map((item, index) => (
                         <div className='complaints'>
@@ -191,6 +242,19 @@ const PatientPage = () => {
                             <div className='life-anamnesis-item disease-item'><span className='item-title'>Development:</span> <p className='life-anamnesis-labor'>{diseaseAnamnesis[0]?.development}</p></div>
                             <div className='life-anamnesis-item disease-item'><span className='item-title'>Disease start:</span><p className='life-anamnesis-laborPathologies'> {diseaseAnamnesis[0]?.diseaseStart}</p></div>
                         </div>
+                </div>
+
+                <div class="tab__content">
+                <div className='tabs'>
+                    <p className='tab-item exam-id'>№</p>
+                    <p className='tab-item exam-name'>Name</p>
+                </div>
+                    {(vaccinations) ? vaccinations.map((item, index) => (
+                        <div className='complaints'>
+                            <p className='exam-id'>{index + 1}.</p>
+                            <p className='exam-name'>{item.name}</p>
+                        </div>
+                    )) : null}
                 </div>
 
 

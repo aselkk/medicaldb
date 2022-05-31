@@ -1,29 +1,24 @@
 
-import React, {useState,useEffect} from 'react';
-import './AddPatientModal.css'
+import React from 'react';
+import './AddComplaintModal.css'
 import { useFormik} from 'formik';
 import {IoMdClose} from 'react-icons/io'
 
-const AddPatientModal = ({modalActive, setModalActive}) => {
+const AddComplaintModal = ({complaintModalActive, setComplaintModalActive}) => {
 
     const toggleModal = () => {
-        setModalActive(!modalActive)
+        setComplaintModalActive(!complaintModalActive)
     }
     
     let handleSubmit = async (values) => {
-        const { firstName, lastName, patronymic, birthDate, sex, phoneNumber, email, address } = values;
+        const { comments, duration, description } = values;
         try {
-        let res = await fetch("http://34.125.200.250/api/patients", {
+        let res = await fetch("http://34.125.200.250/api/patients/12/complains", {
             method: "POST",
             body: JSON.stringify({
-            firstName: firstName,    
-            lastName: lastName,
-            patronymic: patronymic,
-            birthDate: birthDate,
-            sex: sex,
-            phoneNumber: phoneNumber,
-            email: email, 
-            address: address
+            comments: comments,    
+            duration: duration,
+            description: description,
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -33,32 +28,23 @@ const AddPatientModal = ({modalActive, setModalActive}) => {
         let resJson = await res.json();
             console.log(resJson)
         if (res.status === 201) {
-            console.log("patient created successfully");
+            console.log("complaint added successfully");
             toggleModal()
 
         } 
         } catch (err) {
             console.log(err);
         }
-        values.firstName=''
-                values.lastName=''
-                values.patronymic=''
-                values.birthDate=''
-                values.phoneNumber=''
-                values.email=''
-                values.address=''
+                values.comments=''
+                values.duration=''
+                values.description=''
     };
 
     const formik = useFormik({
         initialValues: {
-            firstName: '',
-            lastName: '',
-            patronymic: '',
-            birthDate: '',
-            sex: false,
-            phoneNumber: '',
-            email: '', 
-            address: ''
+            comments: '',
+            duration: '',
+            description: '',
         },
             onSubmit: values => {
                 handleSubmit(values)
@@ -66,105 +52,47 @@ const AddPatientModal = ({modalActive, setModalActive}) => {
             },
         })
     return (
-        <div className={ modalActive ? 'modal active' : 'modal'} onClick={toggleModal}>
-            <div className={ modalActive ? 'modal_content active' : 'modal_content'} onClick={e => e.stopPropagation()}>
+        <div className={ complaintModalActive ? 'modal active' : 'modal'} onClick={toggleModal}>
+            <div className={ complaintModalActive ? 'modal_content active' : 'modal_content'} onClick={e => e.stopPropagation()}>
                     <div style={{paddingTop:'4px', display: 'flex', justifyContent: 'end', alignItems: 'center'}} className='close-modal-btn' onClick={toggleModal} alt="" > <IoMdClose/> </div>
                     <form className='modal-form' onSubmit={formik.handleSubmit}>
                         <div className='form-wrapper'>   
-                            <label className='modal-label' htmlFor="firstName">Name</label>
+                            <label className='modal-label' htmlFor="description">Description</label>
                             <input
-                            placeholder='Ivan'
                                 className='modal-input'
-                                id="firstName"
-                                name="firstName"
+                                id="description"
+                                name="description"
                                 type="text"
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                value={formik.values.firstName}
+                                value={formik.values.description}
                             />
-                            <label className='modal-label' htmlFor="lastName">Last Name</label>
+                            <label className='modal-label' htmlFor="duration">Duration</label>
                             <input
-                            placeholder='Ivanov'
-                                id="lastName"
+                                id="duration"
                                 className='modal-input'
-                                name="lastName"
+                                name="duration"
                                 type="text"
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                value={formik.values.lastName}
+                                value={formik.values.duration}
                             />
-                            <label className='modal-label' htmlFor="patronymic">Patronymic</label>
+                            <label className='modal-label' htmlFor="comments">Comments</label>
                             <input
-                            placeholder='Ivanovich'
-                                id="patronymic"
+                                id="comments"
                                 className='modal-input'
-                                name="patronymic"
+                                name="comments"
                                 type="text"
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                value={formik.values.patronymic}
-                            />
-                            <label className='modal-label' htmlFor="birthDate">Date of birth</label>
-                            <input
-                            placeholder='19/11/1999'
-                                id="birthDate"
-                                className='modal-input'
-                                name="birthDate"
-                                type="date"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.birthDate}
+                                value={formik.values.comments}
                             />
                         </div>
-                        <div className='form-wrapper'>
-                            <label className='modal-label' htmlFor="phoneNumber">Phone number</label>
-                            <input
-                                placeholder='+996(707)191199'
-                                id="phoneNumber"
-                                name="phoneNumber"
-                                className='modal-input'
-                                type="tel"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.phoneNumber}
-                            />
-                            <label className='modal-label' htmlFor="email">Email</label>
-                            <input
-                                placeholder='example@mail.com'
-                                id="email"
-                                name="email"
-                                className='modal-input'
-                                type="email"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.email}
-                            />
-                            <label className='modal-label' htmlFor="address">Address</label>
-                            <input
-                                placeholder='Address'
-                                id="address"
-                                className='modal-input'
-                                name="address"
-                                type="text"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.address}
-                            />
-                            <label className='modal-label' htmlFor="sex">Sex</label>
-                            <div className='radio-wrapper'>
-                                <input style={{margin: '0 4px 0 0'}} type="radio" id="male"
-                                    name="sex" value={formik.values.sex}/>
-                                <label className='modal-label' htmlFor="male">Male</label>
-                                <input style={{margin: '0 4px 0 20px'}} type="radio" id="female"
-                                    name="sex" value={formik.values.sex}/>
-                                <label className='modal-label' htmlFor="female">Female</label>
-                            </div>
-                        </div>
-                        <button className='add-patient' type="submit">Add new patient</button>
+                        <button className='add-patient' type="submit">Add new complaint</button>
                     </form>
             </div>
         </div>
     );
 };
 
-export default AddPatientModal;
+export default AddComplaintModal;

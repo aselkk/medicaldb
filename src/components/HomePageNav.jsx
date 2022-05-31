@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import * as BiIcons from 'react-icons/bi'
 import {HiOutlinePlus}  from 'react-icons/hi'
 import FormControl from '@mui/material/FormControl';
@@ -8,33 +8,34 @@ import AddPatientModal from './AddPatientModal'
 import { Pagination } from '@mui/material';
 
 
-const HomePageNav = ({selectedValue, setSelectedValue, pageNumber, setPageNumber, totalPatients}) => {
+const HomePageNav = ({getSortedPatients, totalPatients, searchValue, setSearchValue }) => {
 
     const [modalActive, setModalActive] = useState(false)
+    const [ sortValue, setSortValue ] = useState('id')
+    const [ currentPage, setCurrentPage ] = useState(1)
+    
+    const totalPages = Math.ceil(totalPatients / 10)
 
-    const handleChange = (e) => {
-        setSelectedValue(e.target.value)
-            console.log(selectedValue)
+    const searchItem = async () => {
+        getSortedPatients( sortValue, currentPage, searchValue)
     }
 
-    // const filterInput = 'false'
-
-    // const filterPatients = async () => {
-    //     const fetchData = await fetch(`https://6241a2cf9b450ae27442e562.mockapi.io/clothes?filter=${filterInput}`)
-    //     const jsonData = await fetchData.json()
-    //     setFilteredPatients(jsonData)
-    // }       
-
-    // useEffect(() => {
-    //     filterPatients()
-    // }, [])
-
-    const totalPages = Math.ceil(totalPatients / 2)
-
     const handleClick = (e, p) => {
-        setPageNumber(p)
-        console.log(totalPatients)
+        setCurrentPage(p)
+        getSortedPatients( sortValue, p, searchValue)
+        console.log(p)
     }   
+
+    const getInputValue = (e) => {
+        setSearchValue(e.target.value)
+        searchItem()
+    }
+
+    const handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+            searchItem()
+        }  
+    }
 
     return (
         <div className='nav-wrapper'>
@@ -51,24 +52,33 @@ const HomePageNav = ({selectedValue, setSelectedValue, pageNumber, setPageNumber
                     <div className='filter'>
                         <div className='search'>
                             <BiIcons.BiSearchAlt2 className='search-icon'/>
-                            <input type="text" className='search-bar' placeholder='Find a patient...'/>
+                            <input 
+                            type="text" 
+                            className='search-bar' 
+                            placeholder='Find a patient...'
+                            onKeyUp={getInputValue}
+                            onKeyPress={handleKeyPress}
+                            />
                         </div>
                         <div className='filter-bar'>
                             <p className='search-text'>Sort by: </p>
                             <div>
-                            <FormControl fullWidth>
+                            <FormControl fullWidth >
                                 <NativeSelect
-                                onChange={handleChange} 
-                                defaultValue={10}
+                                onChange={(e)=> {
+                                    setSortValue(e.target.value)
+                                    getSortedPatients(e.target.value, currentPage, searchValue)
+                                }} 
                                 inputProps={{
                                     id: 'uncontrolled-native',
                                 }}
                                 style={{height: '1.1em', outline:'none', paddingLeft: '4px',
                                 marginRight: '10px', fontSize:'14px',marginTop:'2px'}}
                                 >
-                                <option value={10}>Name</option>
-                                <option value={20}>Birth Date</option>
-                                <option value={30}>Gender</option>
+                                <option value={'id'}>ID</option>
+                                <option value={'name'}>Name</option>
+                                <option value={'birthDate'}>Birth Date</option>
+                                <option value={40}>Gender</option>
                                 </NativeSelect>
                             </FormControl>
                             </div>

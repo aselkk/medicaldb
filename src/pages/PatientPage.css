@@ -105,6 +105,16 @@
     transform: translateY(0px);
     text-shadow: 0 0 0;
   }
+
+  .tab:checked:nth-of-type(6) ~ .tab__content:nth-of-type(6) {
+    opacity: 1;
+    transition: 0.3s opacity ease-in, 0.3s transform ease;
+    position: relative;
+    top: 0;
+    z-index: 0;
+    transform: translateY(0px);
+    text-shadow: 0 0 0;
+  }
   .tab:first-of-type:not(:last-of-type) + label {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -271,4 +281,15 @@
 .disease-item{
   height: fit-content;
   padding: 18px 0;
+}
+
+.life-anamnesis-labor{
+    width: 60%;
+}
+
+.addComplaintBtn{
+    position: absolute;
+    right: 44px;
+    height: 39px;
+    top: 14px;
 }

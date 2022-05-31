@@ -6,29 +6,38 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
 
     const [patients,setPatients] = useState([])
-    const [selectedValue, setSelectedValue] = useState('')
-    const [pageNumber, setPageNumber] = useState(1)
     const [totalPatients, setTotalPatients] = useState('')
+    const [searchValue, setSearchValue] = useState('')
 
     const getPatients = async () => {
-        const fetchData = await fetch(`http://34.125.200.250/api/patients?pageNumber=${pageNumber}&pageSize=5`)
+        const fetchData = await fetch(`http://34.125.200.250/api/patients?pageNumber=1&pageSize=10`)
         const jsonData = await fetchData.json()
         setPatients(jsonData)
     }  
     const getTotalPatients = async () => {
-        const fetchData = await fetch(`http://34.125.200.250/api/patients`)
+        const fetchData = await fetch(`http://34.125.200.250/api/patients?pageSize=999`)
         const jsonData = await fetchData.json()
         setTotalPatients(jsonData.length)
     }       
+    const getSortedPatients = async (selectedValue, currentPage, searchik) => {
+        const fetchData = await fetch(`http://34.125.200.250/api/patients?orderBy=${selectedValue}&pageNumber=${currentPage}&searchTerm=${searchik}`)
+        const jsonData = await fetchData.json()
+        setPatients(jsonData)
+    }  
     useEffect(() => {
         getPatients()
         getTotalPatients()
-    }, [patients])
+    }, [ ])
+
+
 
 
     return (
         <div className='home-page-wrapper'>
-            <HomePageNav selectedValue={selectedValue} setSelectedValue={setSelectedValue} pageNumber={pageNumber} setPageNumber={setPageNumber} totalPatients={totalPatients}/>
+            <HomePageNav 
+                totalPatients={totalPatients} searchValue={searchValue} setSearchValue={setSearchValue}
+                getSortedPatients={getSortedPatients}
+            />
             <div className='titles'>
                     <p className='title-item patient-id'>№</p>
                     <p className='title-item patient-fullname'>Full Name</p>
